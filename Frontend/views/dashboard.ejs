@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <div class="sidebar">
+      <h2>Dashboard</h2>
+      <ul>
+        <li><a href="#">Welcome to <%= role %> Dashboard</a></li>
+
+        <% if (role === "company") { %>
+          <li><a href="/dashboard/post-job">Post Job</a></li>
+          <li><a href="/dashboard/view-jobs">View Jobs</a></li>
+          <li><a href="/dashboard/view-applications">View Applications</a></li>
+        <% } else if (role === "jobSeeker") { %>
+          <li><a href="/dashboard/view-jobs">View Jobs</a></li>
+          <li><a href="/dashboard/applied-jobs">Applied Jobs</a></li>
+        <% } else if (role === "admin") { %>
+          <li><a href="/dashboard/view-job-seekers">Job Seekers</a></li>
+          <li><a href="/dashboard/view-companies">Companies</a></li>
+        <% } %>
+
+        <li><a href="/auth/logout">Logout</a></li>
+      </ul>
+    </div>
+
+    <div class="main-content">
+      <h1>Welcome, <%= username %>!</h1>
+
+      <% if (role === "company" && data.jobs) { %>
+        <h2>Your Posted Jobs</h2>
+        <ul>
+          <% data.jobs.forEach(job => { %>
+            <li><strong><%= job.title %></strong>: <%= job.description %></li>
+          <% }) %>
+        </ul>
+      <% } else if (role === "jobSeeker" && data.jobs) { %>
+        <h2>Available Jobs</h2>
+        <ul>
+          <% data.jobs.forEach(job => { %>
+            <li><strong><%= job.title %></strong>: <%= job.description %></li>
+          <% }) %>
+        </ul>
+
+        <h2>Applied Jobs</h2>
+        <ul>
+          <% data.appliedJobs.forEach(job => { %>
+            <li><strong><%= job.title %></strong> (Applied on: <%= job.applied_at %>)</li>
+          <% }) %>
+        </ul>
+      <% } else if (role === "admin") { %>
+        <h2>Job Seekers</h2>
+        <ul>
+          <% data.jobSeekers.forEach(seeker => { %>
+            <li><%= seeker.username %> - <%= seeker.email %></li>
+          <% }) %>
+        </ul>
+
+        <h2>Companies</h2>
+        <ul>
+          <% data.companies.forEach(company => { %>
+            <li><%= company.username %> - <%= company.email %></li>
+          <% }) %>
+        </ul>
+      <% } %>
+    </div>
+  </div>
+</body>
+</html>
