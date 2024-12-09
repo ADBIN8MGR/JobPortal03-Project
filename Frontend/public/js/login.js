@@ -1,30 +1,41 @@
-// Handle login form submission
-document.getElementById("loginForm").addEventListener("submit", async (event) => {
-    event.preventDefault();
-  
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    const role = document.getElementById("role").value; // Add role if needed
-  
-    // Send login request to backend
-    const response = await fetch("http://localhost:8000/auth/login", {
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  if (!email || !password) {
+    alert("Please enter both email and password.");
+    return;
+  }
+
+  document.getElementById("login-button").disabled = true;
+
+  try {
+    const response = await fetch("/auth/login", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password, role }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+      credentials: "same-origin",  // This ensures cookies are sent with the request
     });
-  
+
     const data = await response.json();
-  
+
     if (data.success) {
-      // Store the JWT token in localStorage
       localStorage.setItem("token", data.token);
-  
-      // Redirect to the dashboard
-      window.location.href = "/dashboard"; // After login, redirect to the dashboard
+
+      if (data.redirectUrl) {
+        window.location.href = data.redirectUrl; // Redirect based on role
+      } else {
+        alert("Redirection URL not provided.");
+      }
     } else {
-      alert("Login failed: " + data.message); // Handle failed login
+      alert(data.message || "Login failed.");
     }
-  });
-  
+  } catch (error) {
+    console.error("Error during login:", error);
+    alert("An error occurred.");
+  } finally {
+    document.getElementById("login-button").disabled = false;
+  }
+});

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company Dashboard</title>
+</head>
+<body>
+  <h1>Welcome to Company Dashboard, <%= user.username %></h1>
+  <button onclick="location.href='/auth/logout'">Logout</button>
+
+  <h2>Post a Job</h2>
+  <form id="postJobForm">
+    <input type="text" id="jobTitle" placeholder="Job Title" required />
+    <textarea id="jobDescription" placeholder="Job Description" required></textarea>
+    <button type="submit">Post Job</button>
+  </form>
+
+  <h2>Your Posted Jobs</h2>
+  <ul id="postedJobs">
+    <% postedJobs.forEach(job => { %>
+      <li>
+        <strong><%= job.title %></strong>: <%= job.description %>
+        <button onclick="deleteJob('<%= job.id %>')">Delete</button>
+      </li>
+    <% }); %>
+  </ul>
+
+  <h2>Applications for Your Jobs</h2>
+  <ul>
+    <% applications.forEach(app => { %>
+      <li>
+        Job: <strong><%= app.job_title %></strong><br />
+        Applicant: <%= app.applicant_name %> (<%= app.applicant_email %>)<br />
+        <a href="/uploads/<%= app.applicant_cv %>" target="_blank">Download CV</a>
+      </li>
+    <% }); %>
+  </ul>
+
+  <script>
+    // Post a job
+    document.getElementById("postJobForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const title = document.getElementById("jobTitle").value;
+      const description = document.getElementById("jobDescription").value;
+
+      try {
+        const response = await fetch("/jobs/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title, description }),
+        });
+        const data = await response.json();
+        if (data.success) {
+          alert("Job posted successfully!");
+          location.reload();
+        } else {
+          alert(data.message);
+        }
+      } catch (error) {
+        console.error("Error posting job:", error);
+      }
+    });
+
+    // Delete a job
+    async function deleteJob(jobId) {
+      try {
+        const response = await fetch(`/jobs/delete/${jobId}`, { method: "DELETE" });
+        const data = await response.json();
+        if (data.success) {
+          alert("Job deleted successfully!");
+          location.reload();
+        } else {
+          alert(data.message);
+        }
+      } catch (error) {
+        console.error("Error deleting job:", error);
+      }
+    }
+  </script>
+</body>
+</html>
