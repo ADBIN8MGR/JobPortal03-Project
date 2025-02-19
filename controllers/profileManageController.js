@@ -1,6 +1,6 @@
 import pool from "../config/db.js";
 
-const updateJobSeekerProfile = async (req, res) => {
+export const updateJobSeekerProfile = async (req, res) => {
   const { id } = req.user;
   const cv = req.file ? req.file.path : null;
 
@@ -13,5 +13,3 @@ const updateJobSeekerProfile = async (req, res) => {
     res.status(500).json({ message: "Server Error", error });
   }
 };
-
-module.exports = { updateJobSeekerProfile };

@@ -1,4 +1,4 @@
-import { verifyUserToken } from "../utils/jwt";
+import { verifyUserToken } from "../utils/jwt.js";
 
 const authenticate = (req, res, next) => {
   const token =
@@ -22,4 +22,4 @@ const authenticate = (req, res, next) => {
   next();
 };
 
-module.exports = authenticate;
+export default authenticate;

@@ -2,17 +2,21 @@ import express from "express";
 const app = express();
 import cookieParser from "cookie-parser";
 import methodOverride from "method-override";
+import path from "path";
+import { fileURLToPath } from "url";
 const PORT = process.env.PORT || 8000;
-const path = require("path");
 
 //routers
-import authRoutes from "./routes/authRoutes";
-import jobSeekerRoutes from "./routes/jobSeekerRoutes";
-import adminRoutes from "./routes/adminRoutes";
-import companyRoutes from "./routes/companyRoutes";
+import authRoutes from "./routes/authRoutes.js";
+import jobSeekerRoutes from "./routes/jobSeekerRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
+import companyRoutes from "./routes/companyRoutes.js";
 
 //middleware
-import authenticateUser from "./middleware/authMiddleware";
+import authenticateUser from "./middleware/authMiddleware.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());

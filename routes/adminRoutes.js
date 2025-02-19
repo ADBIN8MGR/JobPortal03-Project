@@ -5,9 +5,9 @@ import {
   deleteUser,
   deleteJob,
   getJobs,
-} from "../controllers/adminController";
-import { getStats } from "../controllers/statsController";
-import authenticate from "../middleware/authMiddleware";
+} from "../controllers/adminController.js";
+import { getStats } from "../controllers/statsController.js";
+import authenticate from "../middleware/authMiddleware.js";
 
 router.delete("/users/:id", authenticate, deleteUser);
 router.delete("/jobs/:id", authenticate, deleteJob);
@@ -79,4 +79,4 @@ router.route("/stats").get(authenticate, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

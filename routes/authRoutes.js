@@ -19,4 +19,4 @@ router.route("/login").get(loginPage).post(loginUser);
 router.get("/dashboard", authenticate, dashboardPage);
 router.get("/logout", logoutUser);
 
-module.exports = router;
+export default router;

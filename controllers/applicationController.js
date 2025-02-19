@@ -1,6 +1,6 @@
 import pool from "../config/db.js";
 
-const applyForJob = async (req, res) => {
+export const applyForJob = async (req, res) => {
   const { job_id } = req.body;
   const job_seeker_id = req.user.id;
   try {
@@ -16,7 +16,7 @@ const applyForJob = async (req, res) => {
   }
 };
 
-const getApplications = async (req, res) => {
+export const getApplications = async (req, res) => {
   const { job_seeker_id, job_id } = req.query;
   try {
     let query = `
@@ -50,7 +50,7 @@ const getApplications = async (req, res) => {
   }
 };
 
-const shortlistApplication = async (req, res) => {
+export const shortlistApplication = async (req, res) => {
   const { id } = req.params;
   try {
     const query = 'UPDATE applications SET status = "shortlisted" WHERE id = ?';
@@ -63,7 +63,7 @@ const shortlistApplication = async (req, res) => {
   }
 };
 
-const rejectApplication = async (req, res) => {
+export const rejectApplication = async (req, res) => {
   const { id } = req.params;
   try {
     const query = 'UPDATE applications SET status = "rejected" WHERE id = ?';
@@ -76,7 +76,7 @@ const rejectApplication = async (req, res) => {
   }
 };
 
-const getCompanyApplications = async (companyId) => {
+export const getCompanyApplications = async (companyId) => {
   // Accept companyId as an argument
   try {
     const [applications] = await pool.execute(
@@ -106,7 +106,7 @@ const getCompanyApplications = async (companyId) => {
   }
 };
 
-const updateApplicationStatus = async (req, res) => {
+export const updateApplicationStatus = async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
   try {
@@ -122,13 +122,4 @@ const updateApplicationStatus = async (req, res) => {
       return res.status(500).send("Server Error");
     }
   }
-};
-
-module.exports = {
-  applyForJob,
-  getApplications,
-  shortlistApplication,
-  rejectApplication,
-  getCompanyApplications,
-  updateApplicationStatus,
 };

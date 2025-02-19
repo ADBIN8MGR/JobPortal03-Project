@@ -1,6 +1,6 @@
 import pool from "../config/db.js";
 
-const getUsers = async (req, res) => {
+export const getUsers = async (req, res) => {
   try {
     const [rows] = await pool.query(
       'SELECT * FROM users WHERE role != "admin"'
@@ -15,7 +15,7 @@ const getUsers = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
     console.log(`Received request to delete user with ID: ${id}`);
@@ -39,7 +39,7 @@ const deleteUser = async (req, res) => {
   }
 };
 
-const deleteJob = async (req, res) => {
+export const deleteJob = async (req, res) => {
   const { id } = req.params;
   try {
     console.log(`Removing job with ID: ${id}`);
@@ -52,7 +52,7 @@ const deleteJob = async (req, res) => {
   }
 };
 
-const getJobs = async () => {
+export const getJobs = async () => {
   try {
     const [rows] = await pool.query("SELECT * FROM jobs");
     return rows;
@@ -61,5 +61,3 @@ const getJobs = async () => {
     throw error;
   }
 };
-
-module.exports = { getUsers, deleteUser, deleteJob, getJobs };

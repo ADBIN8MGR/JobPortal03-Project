@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 const secret = process.env.JWT_SECRET;
 
-const setUser = (user) => {
+export const setUser = (user) => {
   return jwt.sign(
     {
       id: user.id,
@@ -12,7 +12,7 @@ const setUser = (user) => {
   );
 };
 
-const verifyUserToken = (token) => {
+export const verifyUserToken = (token) => {
   if (!token) return null;
   try {
     return jwt.verify(token, secret);
@@ -21,5 +21,3 @@ const verifyUserToken = (token) => {
     return null;
   }
 };
-
-module.exports = { setUser, verifyUserToken };

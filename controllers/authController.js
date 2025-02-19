@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import { setUser } from "../utils/jwt.js";
 const saltRounds = 10;
 
-const registerUser = async (req, res) => {
+export const registerUser = async (req, res) => {
   console.log(req.params);
   console.log("Request Body:", req.body);
   const { name, email, phoneNumber, password, location, role } = req.body;
@@ -52,14 +52,14 @@ const registerUser = async (req, res) => {
   }
 };
 
-const findUserByEmail = async (email) => {
+export const findUserByEmail = async (email) => {
   const [rows] = await pool.query("SELECT * FROM users WHERE email = ?", [
     email,
   ]);
   return rows;
 };
 
-const loginUser = async (req, res) => {
+export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     console.log("Login attempt with email:", email);
@@ -96,18 +96,18 @@ const loginUser = async (req, res) => {
   }
 };
 
-const loginPage = (req, res) => {
+export const loginPage = (req, res) => {
   const role = req.query.role;
   res.render("login", { role });
 };
 
-const registerPage = (req, res) => {
+export const registerPage = (req, res) => {
   const { role } = req.query;
   console.log(`Role Provided: ${role}`);
   res.render("register", { role });
 };
 
-const dashboardPage = (req, res) => {
+export const dashboardPage = (req, res) => {
   const role = req.user.role;
   switch (role) {
     case "jobSeeker":
@@ -124,19 +124,10 @@ const dashboardPage = (req, res) => {
   }
 };
 
-const logoutUser = (req, res) => {
+export const logoutUser = (req, res) => {
   const token = req.cookies.token;
   if (token) {
     res.clearCookie("token");
   }
   res.redirect("/");
-};
-
-module.exports = {
-  registerUser,
-  loginUser,
-  loginPage,
-  registerPage,
-  dashboardPage,
-  logoutUser,
 };

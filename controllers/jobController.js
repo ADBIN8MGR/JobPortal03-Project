@@ -1,6 +1,6 @@
 import pool from "../config/db.js";
 
-const getJobs = async (req, res) => {
+export const getJobs = async (req, res) => {
   const userId = req.user.id;
   const { location } = req.query;
   try {
@@ -35,7 +35,7 @@ const getJobs = async (req, res) => {
   }
 };
 
-const applyForJob = async (req, res) => {
+export const applyForJob = async (req, res) => {
   const { job_id } = req.body;
   const job_seeker_id = req.user.id;
   try {
@@ -49,7 +49,7 @@ const applyForJob = async (req, res) => {
   }
 };
 
-const addJob = async (req, res) => {
+export const addJob = async (req, res) => {
   const { title, description, location } = req.body;
   const company_id = req.user.id;
   try {
@@ -65,7 +65,7 @@ const addJob = async (req, res) => {
   }
 };
 
-const updateJob = async (req, res) => {
+export const updateJob = async (req, res) => {
   const { id } = req.params;
   const { title, description, location } = req.body;
   try {
@@ -80,7 +80,7 @@ const updateJob = async (req, res) => {
   }
 };
 
-const deleteJob = async (req, res) => {
+export const deleteJob = async (req, res) => {
   const { id } = req.params;
   try {
     const query = "DELETE FROM jobs WHERE id = ?";
@@ -93,7 +93,7 @@ const deleteJob = async (req, res) => {
   }
 };
 
-const getCompanyJobs = async (companyId) => {
+export const getCompanyJobs = async (companyId) => {
   try {
     const [jobs] = await pool.execute(
       "SELECT * FROM jobs WHERE company_id = ?",
@@ -104,13 +104,4 @@ const getCompanyJobs = async (companyId) => {
     console.error("Error fetching company jobs:", error);
     throw error;
   }
-};
-
-module.exports = {
-  getJobs,
-  applyForJob,
-  addJob,
-  updateJob,
-  deleteJob,
-  getCompanyJobs,
 };

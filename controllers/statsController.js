@@ -1,6 +1,6 @@
 import pool from "../config/db.js";
 
-const getStats = async (req, res) => {
+export const getStats = async (req, res) => {
   try {
     const [activeUsers] = await pool.query(
       "SELECT COUNT(*) AS count FROM users"
@@ -21,8 +21,4 @@ const getStats = async (req, res) => {
     console.error("Error fetching stats:", error);
     throw error;
   }
-};
-
-module.exports = {
-  getStats,
 };
