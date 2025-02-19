@@ -1,0 +1,27 @@
+<section id="your-jobs">
+    <div class="jobs-container">
+        <% data.forEach(job => { %>
+            <div class="job-item">
+                <h2><%= job.title %></h2>
+                <p><i class="location-icon"></i> <%= job.location %></p>
+                <p><%= job.description %></p>
+                <button class="edit-button" onclick="toggleEditForm('<%= job.id %>')">Edit</button>
+                <form id="edit-form-<%= job.id %>" class="edit-form" action="/company/jobs/update/<%= job.id %>" method="POST" style="display: none;">
+                    <input type="text" name="title" value="<%= job.title %>" required placeholder="Job Title">
+                    <textarea name="description" required placeholder="Job Description"><%= job.description %></textarea>
+                    <input type="text" name="location" value="<%= job.location %>" required placeholder="Location">
+                    <button type="submit">Update Job</button>
+                </form>
+                <form action="/company/jobs/delete/<%= job.id %>" method="POST">
+                    <button type="submit">Delete Job</button>
+                </form>
+            </div>
+        <% }) %>
+    </div>
+</section>
+<script>
+    function toggleEditForm(jobId) {
+        const form = document.getElementById(`edit-form-${jobId}`);
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    }
+</script>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/CSS/dashboard.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <% menuItems.forEach(item => { %>
+                    <li><a href="<%= item.link %>"><%= item.name %></a></li>
+                <% }); %>
+                <li><a href="/auth/logout">Logout</a></li> 
+            </ul>
+        </nav>
+        <main class="main-content">
+            <h1><%= title %></h1>
+            <% if (userType === 'admin' || userType === 'company') { %>
+                <%- include('partials/' + section, { data: data }) %>
+            <% } else { %>
+                <p>Unauthorized access</p>
+            <% } %>
+        </main>
+    </div>
+</body>
+</html>

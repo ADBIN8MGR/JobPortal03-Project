@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Portal</title>
+    <link rel="stylesheet" href="/CSS/jobApp.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <h1>J</h1>
+            <span>JobPortal</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#jobs">Jobs</a></li>
+                <li><a href="#applied-jobs">Applied Jobs</a></li>
+                <li><a href="#profile-management">Update Profile</a></li>
+                <li><a href="/auth/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section id="jobs" style="display: none;">
+
+        <form action="/jobSeeker" method="get" class="filter-form">
+            <select name="location" class="filter-select">
+                <option value="">All</option>
+                <% locations.forEach(locationObj=> { %>
+                    <option value="<%= locationObj.location %>">
+                        <%= locationObj.location %>
+                    </option>
+                    <% }) %>
+            </select>
+            <button type="submit" class="filter-button">Filter</button>
+        </form>
+        <br>
+        <ul class="job-list">
+            <% jobs.forEach(job=> { %>
+                <% if (!appliedJobs.some(appliedJob=> appliedJob.job_id === job.id)) { %>
+                    <li class="job-item">
+                        <h3>
+                            <%= job.title %>
+                        </h3>
+                        <p class="job-location">Location: <%= job.location %>
+                        </p>
+                        <p class="job-description">
+                            <%= job.description %>
+                        </p>
+                        <form action="/jobSeeker/apply" method="post">
+                            <input type="hidden" name="job_id" value="<%= job.id %>">
+                            <input type="hidden" name="job_seeker_id" value="<%= user.id %>">
+                            <button type="submit" class="apply-button">Apply</button>
+                        </form>
+                    </li>
+                    <% } %>
+                        <% }) %>
+        </ul>
+    </section>
+
+    <section id="applied-jobs" style="display: none;">
+        <h2>Applied Jobs</h2>
+        <ul class="applied-job-list">
+            <% appliedJobs.forEach(job=> { %>
+                <li class="applied-job-item">
+                    <h3>
+                        <%= job.title %>
+                    </h3>
+                    <p class="job-location">Location: <%= job.location %>
+                    </p>
+                    <p class="job-description">
+                        <%= job.description %>
+                    </p>
+                    <p class="job-status">Status: <%= job.status %>
+                    </p>
+                </li>
+                <% }) %>
+        </ul>
+    </section>
+
+    <section id="profile-management" style="display: none;">
+        <h1>Update Profile</h1>
+        <form action="/jobSeeker/updateProfile" method="post" enctype="multipart/form-data"
+            class="profile-form centered-form">
+            <label for="cv">CV:</label>
+            <input type="file" id="cv" name="cv">
+            <input type="hidden" name="id" value="<%= user.id %>">
+            <button type="submit" class="update-button">Update</button>
+        </form>
+    </section>
+
+    <script src="/JS/jobApp.js"></script>
+</body>
+
+</html>

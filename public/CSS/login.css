@@ -1,0 +1,87 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #cce7ff, #f4f8fc); /* Blue at the top fading to light blue-gray */
+}
+
+.login-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 370px;
+    text-align: center;
+}
+
+.login-container h1 {
+    font-size: 40px;
+    color: #000; /* Darker text color */
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.login-container .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.login-container .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 14px;
+}
+
+.login-container .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #09aace; 
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.login-container button:hover {
+    background-color: #0b88ae; 
+}
+
+.login-container .explore-app {
+    background-color: #1ec9b9;
+}
+
+.login-container .explore-app:hover {
+    background-color: #159d91; 
+}
+
+.login-container .register-link {
+    margin-top: 10px;
+}
+
+.login-container .register-link a {
+    color: #007bff; 
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-container .register-link a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,23 @@
+<section id="application-management">
+    <% if (data.length > 0) { %>
+        <div class="applications-container">
+            <% data.forEach(application => { %>
+                <div class="application-item">
+                    <p>Email: <%= application.job_seeker_email %></p>
+                    <p>Resume: <a href="<%= application.job_seeker_cv %>" download>Download</a></p>
+                    <p>Status: <%= application.application_status %></p>
+                    <div class="application-actions">
+                        <form action="/company/applications/reject/<%= application.application_id %>" method="POST">
+                            <button type="submit" class="reject-button">Reject</button>
+                        </form>
+                        <form action="/company/applications/shortlist/<%= application.application_id %>" method="POST">
+                            <button type="submit" class="shortlist-button">Shortlist</button>
+                        </form>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } else { %>
+        <p>No applications found for your jobs.</p>
+    <% } %>
+</section>

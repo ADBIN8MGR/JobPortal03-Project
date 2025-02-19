@@ -1,0 +1,26 @@
+<section id="job-postings-oversight">
+    <table id="jobs-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Company</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% data.forEach(job => { %>
+                <tr>
+                    <td><%= job.id %></td>
+                    <td><%= job.title %></td>
+                    <td><%= job.company %></td>
+                    <td>
+                        <form action="/admin/jobs/<%= job.id %>?_method=DELETE" method="POST" style="display: inline;">
+                            <button type="submit" class="delete-button">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</section>
